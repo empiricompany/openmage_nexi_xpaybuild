@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Nexi XPay Build Payment Module for OpenMage
+ * Layout updates — XPay Build card payments only.
+ */
+-->
+<layout version="0.1.0">
+    <nexi_checkout_assets>
+        <reference name="head">
+            <block type="core/text" name="nexi_payment_js">
+                <action method="setText">
+                    <text helper="nexi_xpaybuild/data/getPaymentJsHtml"/>
+                </action>
+            </block>
+            <action method="addCss">
+                <stylesheet>nexi/xpaybuild/css/xpaybuild.css</stylesheet>
+            </action>
+        </reference>
+    </nexi_checkout_assets>
+
+    <!-- Standard OPC checkout -->
+    <checkout_onepage_index>
+        <update handle="nexi_checkout_assets"/>
+    </checkout_onepage_index>
+
+    <!-- FireCheckout extension support -->
+    <firecheckout_index_index>
+        <update handle="nexi_checkout_assets"/>
+    </firecheckout_index_index>
+
+    <!-- IWD OnePageCheckout support (optional, uncomment if using IWD OPC) -->
+    <!-- <iwd_opc_index><update handle="nexi_checkout_assets"/></iwd_opc_index> -->
+
+    <!-- Customer account navigation link -->
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="nexi_xpaybuild">
+                <name>nexi_saved_cards</name>
+                <path>nexixpaybuild/account/index</path>
+                <label>My Payment Cards</label>
+            </action>
+        </reference>
+    </customer_account>
+
+    <!-- Saved cards list page -->
+    <nexixpaybuild_account_index>
+        <update handle="customer_account"/>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-left.phtml</template>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="nexi_xpaybuild/customer_cards"
+                   name="nexi_saved_cards"
+                   template="nexi/xpaybuild/customer/cards.phtml"/>
+        </reference>
+    </nexixpaybuild_account_index>
+</layout>

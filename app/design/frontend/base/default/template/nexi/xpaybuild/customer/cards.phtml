@@ -1,0 +1,57 @@
+<?php
+/**
+ * Nexi XPay Build - Customer Saved Cards Template
+ *
+ * @var Nexi_XPayBuild_Block_Customer_Cards $this
+ */
+?>
+<div class="nexi-saved-cards">
+    <div class="page-title">
+        <h1><?php echo $this->__('My Payment Cards') ?></h1>
+    </div>
+
+    <?php if ($cards = $this->getSavedCards()): ?>
+    <table class="nexi-cards-table data-table" cellspacing="0">
+        <thead>
+            <tr>
+                <th><?php echo $this->__('Card') ?></th>
+                <th><?php echo $this->__('Expiry') ?></th>
+                <th><?php echo $this->__('Gateway') ?></th>
+                <th><?php echo $this->__('Actions') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($cards as $_card): ?>
+            <tr>
+                <td>
+                    <img src="<?php echo $this->htmlEscape($this->getCardBrandIconUrl($_card->getBrand())) ?>"
+                         alt="<?php echo $this->htmlEscape($_card->getBrand()) ?>"
+                         width="36" height="24" style="vertical-align:middle; margin-right:6px;">
+                    **** **** **** <?php echo $this->htmlEscape(substr($_card->getMaskedPan(), -4)) ?>
+                </td>
+                <td><?php echo sprintf('%02d/%04d', $_card->getExpiryMonth(), $_card->getExpiryYear()) ?></td>
+                <td><?php echo $this->htmlEscape($_card->getGatewayType()) ?></td>
+                <td>
+                    <form method="post" action="<?php echo $this->htmlEscape($this->getDeleteUrl()) ?>"
+                          onsubmit="return confirm('<?php echo $this->__('Are you sure you want to remove this card?') ?>')">
+                        <?php echo $this->getBlockHtml('formkey') ?>
+                        <input type="hidden" name="id" value="<?php echo (int)$_card->getId() ?>">
+                        <button type="submit" class="button btn-remove">
+                            <span><span><?php echo $this->__('Remove') ?></span></span>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <?php else: ?>
+    <p class="nexi-no-cards"><?php echo $this->__('You have no saved payment cards.') ?></p>
+    <?php endif; ?>
+
+    <div class="buttons-set">
+        <a href="<?php echo $this->getUrl('customer/account') ?>" class="back-link">
+            <span><span><?php echo $this->__('Back') ?></span></span>
+        </a>
+    </div>
+</div>

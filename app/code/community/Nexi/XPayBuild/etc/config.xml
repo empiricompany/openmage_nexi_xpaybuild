@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Nexi_XPayBuild>
+            <version>1.0.0</version>
+        </Nexi_XPayBuild>
+    </modules>
+
+    <global>
+        <models>
+            <nexi_xpaybuild>
+                <class>Nexi_XPayBuild_Model</class>
+                <resourceModel>nexi_xpaybuild_resource</resourceModel>
+            </nexi_xpaybuild>
+            <nexi_xpaybuild_resource>
+                <class>Nexi_XPayBuild_Model_Resource</class>
+                <entities>
+                    <saved_card>
+                        <table>nexi_saved_cards</table>
+                    </saved_card>
+                </entities>
+            </nexi_xpaybuild_resource>
+        </models>
+
+        <helpers>
+            <nexi_xpaybuild>
+                <class>Nexi_XPayBuild_Helper</class>
+            </nexi_xpaybuild>
+        </helpers>
+
+        <blocks>
+            <nexi_xpaybuild>
+                <class>Nexi_XPayBuild_Block</class>
+            </nexi_xpaybuild>
+        </blocks>
+
+        <resources>
+            <nexi_xpaybuild_setup>
+                <setup>
+                    <module>Nexi_XPayBuild</module>
+                </setup>
+            </nexi_xpaybuild_setup>
+        </resources>
+
+        <!-- ─── Events ───────────────────────────────────────────────── -->
+        <events>
+            <!--
+                Fired when admin saves System > Configuration > Payment Methods.
+                The observer fetches available CC brands from the Nexi API
+                and generates a unique installation ID on first run.
+            -->
+            <admin_system_config_changed_section_payment>
+                <observers>
+                    <nexi_xpaybuild>
+                        <class>nexi_xpaybuild/observer</class>
+                        <method>sectionPaymentChanged</method>
+                    </nexi_xpaybuild>
+                </observers>
+            </admin_system_config_changed_section_payment>
+        </events>
+    </global>
+
+    <!-- ─── Frontend router ──────────────────────────────────────────── -->
+    <!--
+        Single router entry covers all controllers in the controllers/ dir:
+          nexixpaybuild/account/*    → AccountController.php
+          nexixpaybuild/xpay/*       → XpayController.php
+    -->
+    <frontend>
+        <routers>
+            <nexixpaybuild>
+                <use>standard</use>
+                <args>
+                    <module>Nexi_XPayBuild</module>
+                    <frontName>nexixpaybuild</frontName>
+                </args>
+            </nexixpaybuild>
+        </routers>
+        <layout>
+            <updates>
+                <nexi_xpaybuild>
+                    <file>nexi_xpaybuild.xml</file>
+                </nexi_xpaybuild>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Nexi_XPayBuild>
+                    <files>
+                        <default>Nexi_XPayBuild.csv</default>
+                    </files>
+                </Nexi_XPayBuild>
+            </modules>
+        </translate>
+    </frontend>
+
+    <!-- ─── Default configuration values ────────────────────────────── -->
+    <default>
+        <payment>
+            <!-- Main card payment method -->
+            <nexi_xpaybuild>
+                <active>0</active>
+                <model>nexi_xpaybuild/payment_nexiPayment</model>
+                <form_block_name>nexi_xpaybuild/form_build</form_block_name>
+                <title>Nexi XPay Build</title>
+                <environment>sandbox</environment>
+                <card_form_style>SPLIT</card_form_style>
+                <accounting_type>I</accounting_type>
+                <order_status>pending</order_status>
+                <oneclick_enabled>0</oneclick_enabled>
+                <allowspecific>0</allowspecific>
+                <sort_order>10</sort_order>
+                <payment_action>authorize</payment_action>
+            </nexi_xpaybuild>
+        </payment>
+    </default>
+</config>

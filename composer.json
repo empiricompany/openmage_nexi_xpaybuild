@@ -1,0 +1,31 @@
+{
+    "name": "empiricompany/openmage-nexi-xpaybuild",
+    "version": "1.0.0",
+    "license": "OSL-3.0",
+    "type": "magento-module",
+    "description": "Nexi XPay Build embedded card payment for OpenMage (Magento 1.x LTS)",
+    "keywords": [
+        "magento",
+        "magento1",
+        "openmage",
+        "nexi",
+        "xpay",
+        "payment",
+        "gateway"
+    ],
+    "require": {
+        "php": ">=8.1 <8.6",
+        "magento-hackathon/magento-composer-installer": "*"
+    },
+    "extra": {
+        "map": [
+            ["app/etc/modules/Nexi_XPayBuild.xml", "app/etc/modules/Nexi_XPayBuild.xml"],
+            ["app/code/community/Nexi/XPayBuild", "app/code/community/Nexi/XPayBuild"],
+            ["app/design/frontend/base/default/layout/nexi_xpaybuild.xml", "app/design/frontend/base/default/layout/nexi_xpaybuild.xml"],
+            ["app/design/frontend/base/default/template/nexi/xpaybuild", "app/design/frontend/base/default/template/nexi/xpaybuild"],
+            ["app/locale/it_IT/Nexi_XPayBuild.csv", "app/locale/it_IT/Nexi_XPayBuild.csv"],
+            ["app/locale/en_US/Nexi_XPayBuild.csv", "app/locale/en_US/Nexi_XPayBuild.csv"],
+            ["skin/frontend/base/default/nexi/xpaybuild", "skin/frontend/base/default/nexi/xpaybuild"]
+        ]
+    }
+}
