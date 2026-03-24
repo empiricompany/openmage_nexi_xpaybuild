@@ -34,6 +34,13 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
             return false;
         }
 
+        // In TEST mode, only show to IPs allowed in dev/restrict/allow_ips
+        if ($helper->getXpayEnvironment() === 'test') {
+            if (!Mage::helper('core')->isDevAllowed()) {
+                return false;
+            }
+        }
+
         return true;
     }
 
