@@ -49,7 +49,7 @@ class Nexi_XPayBuild_Block_Customer_Cards extends Mage_Core_Block_Template
         $key  = strtoupper((string)$brand);
         $icon = isset($brandMap[$key]) ? $brandMap[$key] : 'credit_card.png';
 
-        return $this->getSkinUrl('nexi/xpaybuild/img/' . $icon);
+        return $this->getSkinUrl('nexi/xpaybuild/images/' . $icon);
     }
 
     /**
