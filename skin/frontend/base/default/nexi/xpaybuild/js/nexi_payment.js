@@ -138,8 +138,6 @@
         }
 
         _fetchBuildData(savedCardId, saveCard, retry) {
-            console.log('_fetchBuildData', { savedCardId, saveCard, retry });
-            console.log('isNexiSelected', this.isNexiSelected());
 
             savedCardId = savedCardId || 0;
             saveCard    = !!saveCard;
@@ -216,7 +214,7 @@
     class NexiPaymentXPay extends NexiGatewayBase {
 
         constructor(cfg) {
-            if (typeof XPay === 'undefined') { console.log('XPay SDK non disponibile al momento dell\'inizializzazione.'); }
+            if (typeof XPay === 'undefined') { this.log('XPay SDK non disponibile al momento dell\'inizializzazione.', 'error'); }
             super();
 
             // Singleton: FC esegue new più volte → reinit sull'istanza esistente
@@ -242,7 +240,6 @@
 
         // Chiamato da FC su ogni reinject del blocco pagamento
         _update(cfg) {
-            console.log('NexiPaymentXPay _update');
             this._configure(cfg);
             this._reset();
             this._cardForm  = null;
@@ -252,7 +249,6 @@
         }
 
         _start() {
-            console.log('NexiPaymentXPay _start');
             const form = document.getElementById(this.formId);
             if (!form) {
                 this.log('Form non trovato, attendo reinject...', 'warn');
@@ -270,12 +266,10 @@
             if (!this._loading) {
                 this._fetchBuildData(savedId, false, 0);
             } else {
-                console.log('Form in caricamento, attendo completamento prima di fetchBuildData');
             }
         }
 
         _attachListeners() {
-            console.log('NexiPaymentXPay _attachListeners');
             document.addEventListener('change', e => {
                 if (!e.target) return;
                 if (e.target.name === 'payment[method]') {
@@ -290,7 +284,6 @@
                     this._onCardSwitch(parseInt(e.target.value, 10) || 0);
 
                 if (e.target.id === 'nexi-save-card' && this._cardForm && typeof XPay !== 'undefined' && XPay.updateConfig) {
-                    console.log('Save card checkbox changed — update XPay requestType to ' + (e.target.checked ? 'PP (OneClick)' : 'PA (normal)'));
                     XPay.updateConfig(this._cardForm, {
                         serviceType: 'paga_oc3d',
                         requestType: e.target.checked ? 'PP' : 'PA'
@@ -310,7 +303,6 @@
             });
 
             window.addEventListener('XPay_Nonce', e => {
-                console.log('XPay_Nonce', e);
                 if (e.detail && e.detail.esito === 'OK' && e.detail.xpayNonce) {
                     this._hidden('nexi-xpay-nonce', e.detail.xpayNonce);
                     this._hidden('nexi-xpay-cod-trans', this._buildData ? this._buildData.codTrans : '');
@@ -328,7 +320,7 @@
                     }).catch(err => {
                         this._formError('Errore salvataggio nonce: ' + (err && err.message ? err.message : err));
                     });
-                    console.log('Nonce di pagamento ricevuto, procedo con submit');
+                    this.log('Nonce di pagamento ricevuto, procedo con submit');
                 } else {
                     const codice = e.detail && e.detail.errore ? String(e.detail.errore.codice) : '';
                     const msg    = e.detail && e.detail.errore ? e.detail.errore.messaggio : 'Nonce di pagamento non valido.';
@@ -346,7 +338,6 @@
             });
 
             window.addEventListener('XPay_Card_Error', e => {
-                console.log('XPay_Card_Error', e);
                 if (e.detail && 'errorMessage' in e.detail) {
                     if (e.detail.errorMessage) this.showError(e.detail.errorMessage);
                     else this.hideError();
@@ -358,7 +349,6 @@
 
             if (typeof document.observe === 'function') {
                 document.observe('firecheckout:setResponseAfter', e => {
-                    console.log('firecheckout:setResponseAfter', e);
                     if (!this.isNexiSelected()) return;
                     const response = e.memo && e.memo.response;
                     if (!response || response.success || response.redirect) return;
@@ -386,7 +376,6 @@
         }
 
         _patchSubmit() {
-            console.log('NexiPaymentXPay _patchSubmit');
             if (typeof window.payment !== 'undefined' && window.payment && window.payment.save && !window.payment._nexiPatched) {
                 const orig = window.payment.save.bind(window.payment);
                 window.payment.save = () => {
@@ -394,7 +383,6 @@
                     return this.handleSubmit(orig);
                 };
                 window.payment._nexiPatched = true;
-                console.log('NexiPaymentXPay _patchSubmit on window.payment.save');
             }
 
             Array.from(document.getElementsByClassName('btn-checkout')).forEach((btn, i) => {
@@ -406,11 +394,9 @@
 
                     if (typeof checkout !== 'undefined' && checkout) {
                         if (checkout.loadWaiting !== false) {
-                            console.log('NexiPaymentXPay _patchSubmit: loadWaiting active, skip');
                             return false;
                         }
                         if (typeof checkout.validate === 'function' && !checkout.validate()) {
-                            console.log('NexiPaymentXPay _patchSubmit: checkout.validate() failed');
                             return false;
                         }
                     }
@@ -420,7 +406,6 @@
                 };
 
                 btn._nexiPatched = true;
-                console.log('NexiPaymentXPay _patchSubmit on .btn-checkout[' + i + ']', btn);
             });
         }
 
@@ -433,7 +418,6 @@
         }
 
         initGateway(data) {
-            console.log('initGateway', data);
             this._buildData  = data;
             this._cardStyle  = data.cardFormStyle === 'SPLIT_CARD' ? 'SPLIT_CARD' : 'CARD';
 
@@ -450,13 +434,10 @@
 
         _configureXPay(data) {
             if (typeof XPay === 'undefined') { this._formError('XPay SDK non disponibile.'); return; }
-            console.log('Configuro XPay', data);
             try {
                 XPay.init();
 
                 if (data.savedCardToken) {
-                    console.log('saveCardToken', data);
-                    console.log('this.getXpayEnvironment()', this.getXpayEnvironment());
                     this._hideCardForm();
                     // OneClick Pagamenti Successivi https://ecommerce.nexi.it/specifiche-tecniche/build/pagamentooneclick.html
                     XPay.setConfig({
@@ -503,7 +484,6 @@
         }
 
         _reinitializeXPay() {
-            console.log('_reinitializeXPay');
             this._reset();
             this._cardForm  = null;
             this._buildData = null;
@@ -534,7 +514,6 @@
 
 
         _saveNonceXhr(nonce, codTrans, savedToken, brand, pan, scadenza) {
-            console.log('_saveNonceXhr', { nonce, codTrans, savedToken, brand, pan, scadenza });
             const fkEl  = document.getElementById('form_key') || document.querySelector('input[name="form_key"]');
             const fk    = fkEl ? fkEl.value : '';
             const params = 'xpay_nonce='        + encodeURIComponent(nonce) +
@@ -551,9 +530,7 @@
                 xhr.setRequestHeader('Content-Type',     'application/x-www-form-urlencoded');
                 xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
                 xhr.onreadystatechange = () => {
-                    console.log('_saveNonceXhr onreadystatechange', xhr.readyState, xhr.status);
                     if (xhr.readyState !== 4) {
-                        console.log('_saveNonceXhr in progress...', { readyState: xhr.readyState, status: xhr.status });
                         return;
                     }
                     if (xhr.status === 200) {
