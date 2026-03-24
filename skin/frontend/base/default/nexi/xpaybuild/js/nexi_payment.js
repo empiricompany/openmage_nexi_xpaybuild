@@ -462,7 +462,7 @@
                     XPay.setConfig({
                         baseConfig:    { apiKey: data.alias, enviroment: this.getXpayEnvironment() },
                         paymentParams: { amount: data.importo, transactionId: data.codTrans, currency: data.divisa, timeStamp: data.timeStamp, mac: data.mac },
-                        language:      data.language || 'ITA',
+                        language:      data.language || XPay.LANGUAGE.ITA,
                         customParams:  { 
                             // Codice univoco assegnato dal merchant per l'abbinamento con l'archivio contenente i dati sensibili della carta di credito 
                             num_contratto: data.savedCardToken
@@ -478,7 +478,7 @@
                     XPay.setConfig({
                         baseConfig:    { apiKey: data.alias, enviroment: this.getXpayEnvironment() },
                         paymentParams: { amount: data.importo, transactionId: data.codTrans, currency: data.divisa, timeStamp: data.timeStamp, mac: data.mac },
-                        language: data.language || 'ITA'
+                        language: data.language || XPay.LANGUAGE.ITA
                     });
 
                     if (this._cardStyle === 'CARD') {
