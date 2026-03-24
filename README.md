@@ -1,8 +1,5 @@
 # Nexi XPay Build — Modulo di Pagamento per OpenMage / Magento 1
 
-**Versione:** 1.0.0
-**Licenza:** GNU General Public License v3.0
-
 ---
 
 ## Compatibilità
@@ -77,4 +74,4 @@ I token delle carte sono memorizzati in forma cifrata e non contengono dati sens
 
 ## Licenza
 
-GNU General Public License v3.0
+Open Software License (OSL) v. 3.0
