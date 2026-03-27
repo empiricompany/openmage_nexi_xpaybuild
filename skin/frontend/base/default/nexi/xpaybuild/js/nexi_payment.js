@@ -360,6 +360,10 @@
                     this.log('FC: errore pagamento (nonce stale) — ricarico sezione payment via checkout.update()');
                     this._reinitializeXPay();
                 });
+                document.observe('firecheckout:updateAfter', e => {
+                    if (!this.isNexiSelected()) return;
+                    this._patchSubmit();
+                });
             }
         }
 
