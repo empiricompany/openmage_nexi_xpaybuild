@@ -170,7 +170,7 @@ class Nexi_XPayBuild_Model_Api_XpayClient
      * @param int         $importo            Amount in minor units (cents)
      * @param int|string  $divisa             ISO 4217 numeric currency code
      * @param string      $xpayNonce
-     * @param string      $accountingType     'I' for immediate capture (TCONTAB=I) or 'D' for deferred (TCONTAB=D)
+     * @param string      $accountingType     'C' for immediate capture (TCONTAB=C) or 'D' for deferred (TCONTAB=D)
      * @param string|null $customerName
      * @param string|null $customerSurname
      * @param string|null $customerEmail
@@ -246,7 +246,7 @@ class Nexi_XPayBuild_Model_Api_XpayClient
      * @param int         $importo            Amount in minor units (cents)
      * @param int|string  $divisa             ISO 4217 numeric currency code
      * @param string      $xpayNonce
-     * @param string      $accountingType     'I' for immediate capture (TCONTAB=I) or 'D' for deferred (TCONTAB=D)
+     * @param string      $accountingType     'C' for immediate capture (TCONTAB=C) or 'D' for deferred (TCONTAB=D)
      * @param string|null $customerName
      * @param string|null $customerSurname
      * @param string|null $customerEmail
@@ -289,7 +289,7 @@ class Nexi_XPayBuild_Model_Api_XpayClient
      * @param int|string  $divisa             ISO 4217 numeric currency code
      * @param string      $xpayNonce
      * @param string      $numeroContratto    Unique contract ID (max 30 chars)
-     * @param string      $accountingType     'I' for immediate capture (TCONTAB=I) or 'D' for deferred (TCONTAB=D)
+     * @param string      $accountingType     'C' for immediate capture (TCONTAB=C) or 'D' for deferred (TCONTAB=D)
      * @param string|null $customerName
      * @param string|null $customerSurname
      * @param string|null $customerEmail
@@ -332,7 +332,7 @@ class Nexi_XPayBuild_Model_Api_XpayClient
      * @param int         $importo            Amount in minor units (cents)
      * @param int|string  $divisa             ISO 4217 numeric currency code
      * @param string      $xpayNonce          Nonce returned by XPay for the recurring charge
-     * @param string      $accountingType     'I' for immediate capture (TCONTAB=I) or 'D' for deferred (TCONTAB=D)
+     * @param string      $accountingType     'C' for immediate capture (TCONTAB=C) or 'D' for deferred (TCONTAB=D)
      * @param string|null $customerName
      * @param string|null $customerSurname
      * @param string|null $customerEmail

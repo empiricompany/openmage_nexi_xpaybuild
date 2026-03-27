@@ -105,7 +105,7 @@
                 <title>Nexi XPay Build</title>
                 <environment>sandbox</environment>
                 <card_form_style>SPLIT</card_form_style>
-                <accounting_type>I</accounting_type>
+                <accounting_type>C</accounting_type>
                 <order_status>pending</order_status>
                 <oneclick_enabled>0</oneclick_enabled>
                 <allowspecific>0</allowspecific>

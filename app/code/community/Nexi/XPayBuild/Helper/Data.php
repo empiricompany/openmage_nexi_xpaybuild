@@ -55,7 +55,7 @@ class Nexi_XPayBuild_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * Get accounting type — I = Immediate, D = Deferred.
+     * Get accounting type — C = Immediate, D = Deferred.
      *
      * @param int|null $storeId
      * @return string
@@ -63,7 +63,7 @@ class Nexi_XPayBuild_Helper_Data extends Mage_Core_Helper_Abstract
     public function getAccountingType($storeId = null)
     {
         $type = $this->getConfig('accounting_type', $storeId);
-        return ($type === 'D') ? 'D' : 'I';
+        return ($type === 'D') ? 'D' : 'C';
     }
 
     /**

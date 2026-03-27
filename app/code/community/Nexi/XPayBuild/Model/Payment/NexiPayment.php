@@ -691,9 +691,9 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
     }
 
     /**
-     * Return the accounting type (I = Immediate, D = Deferred) from config.
+     * Return the accounting type (C = Immediate, D = Deferred) from config.
      *
-     * @return string  'I' | 'D'
+     * @return string  'C' | 'D'
      */
     protected function _getAccountingType()
     {
