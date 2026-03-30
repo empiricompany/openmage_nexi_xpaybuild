@@ -288,9 +288,9 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
             $payment->setTransactionId($codTrans);
 
             // Persist relevant response fields + RAW_DETAILS for the admin "Transaction Details" tab
-             $rawDetails = $this->_saveXpayResponseFields(
+            $this->_saveXpayResponseFields(
                  $payment, $response, array('codAut', 'codiceAutorizzazione', 'brand', 'pan', 'scadenza', 'scadenzaPan')
-             );
+            );
 
             if ($accountingType === Nexi_XPayBuild_Model_Api_XpayClient::XPAY_TCONTAB_IMMEDIATE) {
                 $payment->setIsTransactionClosed(true);
