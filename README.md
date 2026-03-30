@@ -1,6 +1,9 @@
 # OpenMage Nexi XPay Build
 ## Modulo di Pagamento per OpenMage / Magento 1
 
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/empiricompany/openmage-nexi-xpaybuild.svg?style=flat-square)](https://packagist.org/packages/empiricompany/openmage-nexi-xpaybuild)
+[![Total Downloads](https://img.shields.io/packagist/dt/empiricompany/openmage-nexi-xpaybuild.svg?style=flat-square)](https://packagist.org/packages/empiricompany/openmage-nexi-xpaybuild)
+
 ---
 
 ## Compatibilità
