@@ -104,9 +104,9 @@
                 <form_block_name>nexi_xpaybuild/form_build</form_block_name>
                 <title>Nexi XPay Build</title>
                 <environment>sandbox</environment>
-                <card_form_style>SPLIT</card_form_style>
+                <card_form_style>CARD</card_form_style>
                 <accounting_type>C</accounting_type>
-                <order_status>pending</order_status>
+                <order_status>processing</order_status>
                 <oneclick_enabled>0</oneclick_enabled>
                 <allowspecific>0</allowspecific>
                 <sort_order>10</sort_order>
