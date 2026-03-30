@@ -62,7 +62,7 @@ $_hasSavedCards = $this->isOneclickEnabled() && count($this->getSavedCards()) > 
         <div class="nexi-card-form"<?php if ($_hasSavedCards): ?> style="display:none;"<?php endif; ?>>
             <p class="nexi-card-form-label"><?php echo $this->__('Enter your card details:') ?></p>
 
-            <?php if ($this->getCardFormStyle() === 'CARD'): ?>
+            <?php if ($this->getCardFormStyle() === Nexi_XPayBuild_Model_Api_XpayClient::XPAY_CARD_FORM_STYLE_UNIFIED): ?>
 
             <div class="nexi-field-wrapper">
                 <div id="xpay-pan-expiry-cvv-card" class="nexi-build-field nexi-build-field__card"></div>
