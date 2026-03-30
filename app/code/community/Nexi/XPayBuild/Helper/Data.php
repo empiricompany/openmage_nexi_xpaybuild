@@ -73,8 +73,7 @@ class Nexi_XPayBuild_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getCardFormStyle($storeId = null)
     {
-        $style = $this->getConfig('card_form_style', $storeId);
-        return ($style === 'SPLIT_CARD') ? 'SPLIT_CARD' : 'CARD';
+        return $this->getConfig('card_form_style', $storeId);
     }
 
     /**

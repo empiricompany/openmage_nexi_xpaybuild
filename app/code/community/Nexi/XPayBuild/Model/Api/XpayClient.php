@@ -15,6 +15,9 @@ class Nexi_XPayBuild_Model_Api_XpayClient
     const XPAY_TCONTAB_IMMEDIATE = 'C';
     const XPAY_TCONTAB_DEFERRED = 'D';
 
+    const XPAY_CARD_FORM_STYLE_SPLIT = 'SPLIT_CARD';
+    const XPAY_CARD_FORM_STYLE_UNIFIED = 'CARD';
+
     /**
      * @var Nexi_XPayBuild_Helper_Data
      */
