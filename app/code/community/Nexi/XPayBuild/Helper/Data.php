@@ -62,8 +62,7 @@ class Nexi_XPayBuild_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getAccountingType($storeId = null)
     {
-        $type = $this->getConfig('accounting_type', $storeId);
-        return ($type === 'D') ? 'D' : 'C';
+        return $this->getConfig('accounting_type', $storeId);
     }
 
     /**
@@ -95,9 +94,9 @@ class Nexi_XPayBuild_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $env = $this->getXpayEnvironment($storeId);
         if ($env === 'test') {
-            return 'https://int-ecommerce.nexi.it/';
+            return Nexi_XPayBuild_Model_Api_XpayClient::XPAY_BASE_URL_TEST;
         }
-        return 'https://ecommerce.nexi.it/';
+        return Nexi_XPayBuild_Model_Api_XpayClient::XPAY_BASE_URL_PRODUCTION;
     }
 
     /**

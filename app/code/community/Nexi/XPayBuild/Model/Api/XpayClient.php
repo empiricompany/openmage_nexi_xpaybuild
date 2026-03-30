@@ -1,13 +1,19 @@
 <?php
 class Nexi_XPayBuild_Model_Api_XpayClient
 {
-    const XPAY_URI_PAGA_NONCE              = 'ecomm/api/hostedPayments/pagaNonce';
+    const XPAY_BASE_URL_PRODUCTION = 'https://ecommerce.nexi.it/';
+    const XPAY_BASE_URL_TEST = 'https://int-ecommerce.nexi.it/';
+
+    const XPAY_URI_PAGA_NONCE = 'ecomm/api/hostedPayments/pagaNonce';
     const XPAY_URI_PAGA_NONCE_CREA_CONTRATTO = 'ecomm/api/hostedPayments/pagaNonceCreazioneContratto';
-    const XPAY_URI_RICORRENTE_3DS          = 'ecomm/api/recurring/pagamentoRicorrente3DS';
-    const XPAY_URI_ACCOUNT                 = 'ecomm/api/bo/contabilizza';
-    const XPAY_URI_REFUND                  = 'ecomm/api/bo/storna';
-    const XPAY_URI_ORDER_DETAIL            = 'ecomm/api/bo/situazioneOrdine';
-    const XPAY_URI_PROFILE_INFO            = 'ecomm/api/profileInfo';
+    const XPAY_URI_RICORRENTE_3DS = 'ecomm/api/recurring/pagamentoRicorrente3DS';
+    const XPAY_URI_ACCOUNT = 'ecomm/api/bo/contabilizza';
+    const XPAY_URI_REFUND = 'ecomm/api/bo/storna';
+    const XPAY_URI_ORDER_DETAIL = 'ecomm/api/bo/situazioneOrdine';
+    const XPAY_URI_PROFILE_INFO = 'ecomm/api/profileInfo';
+
+    const XPAY_TCONTAB_IMMEDIATE = 'C';
+    const XPAY_TCONTAB_DEFERRED = 'D';
 
     /**
      * @var Nexi_XPayBuild_Helper_Data

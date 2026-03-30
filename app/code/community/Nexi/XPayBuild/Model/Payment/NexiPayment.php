@@ -98,7 +98,7 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
     }
 
     /**
-     * @param Varien_Object $payment
+     * @param Mage_Sales_Model_Order_Payment $payment
      * @param float         $amount
      * @return $this
      * @throws Mage_Core_Exception
@@ -115,7 +115,7 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
     }
 
     /**
-     * @param Varien_Object $payment
+     * @param Mage_Sales_Model_Order_Payment $payment
      * @param float         $amount
      * @return $this
      * @throws Mage_Core_Exception
@@ -126,7 +126,7 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
     }
 
     /**
-     * @param Varien_Object $payment
+     * @param Mage_Sales_Model_Order_Payment $payment
      * @param float         $amount
      * @return $this
      * @throws Mage_Core_Exception
@@ -139,7 +139,7 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
     /**
      * Void is not supported by XPay — use refund instead.
      *
-     * @param Varien_Object $payment
+     * @param Mage_Sales_Model_Order_Payment $payment
      * @return $this
      * @throws Mage_Core_Exception
      */
@@ -174,7 +174,7 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
      * 5. On esito OK + $saveCard: call _saveXpayCard().
      * 6. On any other esito: throw exception.
      *
-     * @param Varien_Object $payment
+     * @param Mage_Sales_Model_Order_Payment $payment
      * @param float         $amount
      * @param bool          $saveCard
      * @return $this
@@ -225,7 +225,7 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
         $currencyCode   = $order->getOrderCurrencyCode();
         $importo        = $helper->formatAmountToMinorUnit($amount, $currencyCode);
         $divisa         = $helper->getCurrencyNumericCode($currencyCode);
-        $accountingType = $this->_getAccountingType();
+        $accountingType = $helper->getAccountingType();
 
         /** @var Mage_Sales_Model_Order_Address $billingAddress */
         $billingAddress = $order->getBillingAddress();
@@ -292,7 +292,7 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
                  $payment, $response, array('codAut', 'codiceAutorizzazione', 'brand', 'pan', 'scadenza', 'scadenzaPan')
              );
 
-            if ($accountingType === 'C') {
+            if ($accountingType === Nexi_XPayBuild_Model_Api_XpayClient::XPAY_TCONTAB_IMMEDIATE) {
                 $payment->setIsTransactionClosed(true);
                 $payment->setIsTransactionPending(false);
                 Mage::helper('nexi_xpaybuild')->createInvoiceForOrder($order, $codTrans);
@@ -327,7 +327,7 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
     /**
      * Authorize a recurring (OneClick) XPay payment using a saved-card nonce.
      *
-     * @param Varien_Object $payment
+     * @param Mage_Sales_Model_Order_Payment $payment
      * @param float         $amount
      * @param int           $savedCardId  Internal saved-card record ID (for tracking)
      * @return $this
@@ -387,7 +387,7 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
         $currencyCode   = $order->getOrderCurrencyCode();
         $importo        = $helper->formatAmountToMinorUnit($amount, $currencyCode);
         $divisa         = $helper->getCurrencyNumericCode($currencyCode);
-        $accountingType = $this->_getAccountingType();
+        $accountingType = $helper->getAccountingType();
 
         $helper->log(
             'NexiPayment::_authorizeXpayOneClick() codTrans=' . $codTrans .
@@ -460,7 +460,7 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
                 );
             }
 
-            if ($accountingType === 'C') {
+            if ($accountingType === Nexi_XPayBuild_Model_Api_XpayClient::XPAY_TCONTAB_IMMEDIATE) {
                 $payment->setIsTransactionClosed(true);
                 $payment->setIsTransactionPending(false);
                 Mage::helper('nexi_xpaybuild')->createInvoiceForOrder($order, $codTrans);
@@ -484,7 +484,7 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
     }
 
     /**
-     * @param Varien_Object $payment
+     * @param Mage_Sales_Model_Order_Payment $payment
      * @param float         $amount
      * @return $this
      * @throws Mage_Core_Exception
@@ -530,6 +530,10 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
             Mage::throwException($errorMsg);
         }
 
+        $this->_saveXpayResponseFields(
+            $payment, $response, array('codiceAutorizzazione', 'codAut', 'brand', 'pan', 'scadenza', 'scadenzaPan')
+        );
+
         $payment->setTransactionId($codTrans . '-capture');
         $payment->setIsTransactionClosed(true);
 
@@ -537,7 +541,7 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
     }
 
     /**
-     * @param Varien_Object $payment
+     * @param Mage_Sales_Model_Order_Payment $payment
      * @param float         $amount
      * @return $this
      * @throws Mage_Core_Exception
@@ -583,6 +587,10 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
             Mage::throwException($errorMsg);
         }
 
+        $this->_saveXpayResponseFields(
+            $payment, $response, array('codiceAutorizzazione', 'codAut', 'brand', 'pan', 'scadenza', 'scadenzaPan')
+        );
+        
         $payment->setTransactionId($codTrans . '-refund');
         $payment->setIsTransactionClosed(true);
 
@@ -598,7 +606,7 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
      *
      * Non-critical: a failure here logs a warning but does NOT abort the order.
      *
-     * @param Varien_Object $payment
+     * @param Mage_Sales_Model_Order_Payment $payment
      * @param array         $response  Raw XPay pagaNonce response array
      * @param string|null   $numeroContratto
      * @return void
@@ -691,16 +699,6 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
     }
 
     /**
-     * Return the accounting type (C = Immediate, D = Deferred) from config.
-     *
-     * @return string  'C' | 'D'
-     */
-    protected function _getAccountingType()
-    {
-        return Mage::helper('nexi_xpaybuild')->getAccountingType();
-    }
-
-    /**
      * Save XPay response fields to additionalInformation and RAW_DETAILS.
      *
      * $specialFields are saved to additionalInformation (xpay_ prefix) AND rawDetails.
@@ -712,7 +710,7 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
      * @param  array                          $specialFields
      * @return array
      */
-    protected function _saveXpayResponseFields($payment, $response, $specialFields = array())
+    protected function _saveXpayResponseFields(Varien_Object $payment, $response, $specialFields = array())
     {
         $rawDetails = array();
 
