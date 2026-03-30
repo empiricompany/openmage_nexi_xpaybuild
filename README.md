@@ -1,4 +1,5 @@
-# Nexi XPay Build — Modulo di Pagamento per OpenMage / Magento 1
+# OpenMage Nexi XPay Build
+## Modulo di Pagamento per OpenMage / Magento 1
 
 ---
 
