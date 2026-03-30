@@ -77,8 +77,8 @@ class Nexi_XPayBuild_Helper_Mac extends Mage_Core_Helper_Abstract
     {
         $strMac = 'apiKey=' . $apiKey .
                   'codiceTransazione=' . $codiceTransazione .
-                  'importo=' . $importo .
                   'divisa=' . $divisa .
+                  'importo=' . $importo .
                   'timeStamp=' . $timeStamp .
                   $macKey;
         return sha1($strMac);
