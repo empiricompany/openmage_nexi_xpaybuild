@@ -26,7 +26,7 @@
                 <td>
                     <img src="<?php echo $this->escapeHtml($this->getCardBrandIconUrl($_card->getBrand())) ?>"
                          alt="<?php echo $this->escapeHtml($_card->getBrand()) ?>"
-                         width="36" height="24" style="vertical-align:middle; margin-right:6px;">
+                         width="36" style="vertical-align:middle; margin-right:6px; float: left;" />
                     **** **** **** <?php echo $this->escapeHtml(substr($_card->getMaskedPan(), -4)) ?>
                 </td>
                 <td><?php echo sprintf('%02d/%04d', $_card->getExpiryMonth(), $_card->getExpiryYear()) ?></td>
@@ -36,7 +36,7 @@
                           onsubmit="return confirm('<?php echo $this->__('Are you sure you want to remove this card?') ?>')">
                         <?php echo $this->getBlockHtml('formkey') ?>
                         <input type="hidden" name="id" value="<?php echo (int)$_card->getId() ?>">
-                        <button type="submit" class="button btn-remove">
+                        <button type="submit" class="btn btn-remove">
                             <span><span><?php echo $this->__('Remove') ?></span></span>
                         </button>
                     </form>
