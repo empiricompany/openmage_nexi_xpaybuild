@@ -33,26 +33,6 @@ class Nexi_XPayBuild_Block_Customer_Cards extends Mage_Core_Block_Template
     }
 
     /**
-     * @param string $brand
-     * @return string
-     */
-    public function getCardBrandIconUrl($brand)
-    {
-        $brandMap = array(
-            'VISA'       => 'visa.png',
-            'MASTERCARD' => 'mastercard.png',
-            'AMEX'       => 'amex.png',
-            'MAESTRO'    => 'maestro.png',
-            'DINERS'     => 'diners.png',
-        );
-
-        $key  = strtoupper((string)$brand);
-        $icon = isset($brandMap[$key]) ? $brandMap[$key] : 'credit_card.png';
-
-        return $this->getSkinUrl('nexi/xpaybuild/images/' . $icon);
-    }
-
-    /**
      * @return string
      */
     public function getPageTitle()

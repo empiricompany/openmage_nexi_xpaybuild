@@ -1,5 +1,8 @@
 <?php
 /** @var Nexi_XPayBuild_Block_Form_Build $this */
+
+/** @var Nexi_XPayBuild_Helper_SavedCard $_helperSavedCard */
+$_helperSavedCard = Mage::helper('nexi_xpaybuild/savedCard');
 $_hasSavedCards = $this->isOneclickEnabled() && count($this->getSavedCards()) > 0;
 ?>
 <div id="nexi-payment-form" style="display:none;">
@@ -20,9 +23,11 @@ $_hasSavedCards = $this->isOneclickEnabled() && count($this->getSavedCards()) > 
                     data-expiry-month="<?php echo $this->escapeHtml($card->getExpiryMonth()) ?>"
                     data-expiry-year="<?php echo $this->escapeHtml($card->getExpiryYear()) ?>"
                     <?php if (!$_preSelectedCardId): echo 'checked'; $_preSelectedCardId = (int)$card->getId(); endif ?> />
+                    <img src="<?php echo $this->getSkinUrl($_helperSavedCard->getCardBrandIcon($card->getBrand())) ?>"
+                         alt="<?php echo $this->escapeHtml($card->getBrand()) ?>"
+                         width="36" style="vertical-align:middle; margin-right:4px; float: left; max-height: 24px; width: auto;" />
                 <?php echo $this->escapeHtml($card->getMaskedPan()) ?>
-                (<?php echo $this->escapeHtml($card->getBrand()) ?>
-                <?php echo $this->__('Exp.') ?> <?php echo $this->escapeHtml($card->getExpiryMonth()) ?>/<?php echo $this->escapeHtml($card->getExpiryYear()) ?>)
+                (<?php echo $this->__('Exp.') ?> <?php echo $this->escapeHtml($card->getExpiryMonth()) ?>/<?php echo $this->escapeHtml($card->getExpiryYear()) ?>)
             </label>
             <?php endforeach ?>
         <?php endif ?>

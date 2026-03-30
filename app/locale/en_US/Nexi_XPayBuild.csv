@@ -44,6 +44,8 @@
 "Remove","Remove"
 "Are you sure you want to remove this card?","Are you sure you want to remove this card?"
 "You have no saved payment cards.","You have no saved payment cards."
+"Your cards are securely stored, no sensitive information is saved on our servers. You can safely manage your saved cards here, removing those you no longer wish to use. Your saved cards can be used for faster checkout on future purchases.","Your cards are securely stored, no sensitive information is saved on our servers. You can safely manage your saved cards here, removing those you no longer wish to use. Your saved cards can be used for faster checkout on future purchases."
+"Exp.","Exp."
 "Back","Back"
 "Card removed successfully.","Card removed successfully."
 "Unable to remove card. Please try again.","Unable to remove card. Please try again."

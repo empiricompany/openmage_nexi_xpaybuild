@@ -120,6 +120,26 @@ class Nexi_XPayBuild_Helper_SavedCard extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * @param string $brand
+     * @return string
+     */
+    public function getCardBrandIcon($brand)
+    {
+        $brandMap = array(
+            'VISA'       => 'visa.png',
+            'MASTERCARD' => 'mastercard.png',
+            'AMEX'       => 'amex.png',
+            'MAESTRO'    => 'maestro.png',
+            'DINERS'     => 'diners.png',
+        );
+
+        $key  = strtoupper((string)$brand);
+        $icon = isset($brandMap[$key]) ? $brandMap[$key] : 'credit_card.png';
+
+        return 'nexi/xpaybuild/images/' . $icon;
+    }
+
+    /**
      * Load a single card by ID, verifying customer ownership.
      *
      * Returns null if the card does not exist, is inactive, or belongs to a

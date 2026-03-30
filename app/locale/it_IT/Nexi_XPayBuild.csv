@@ -36,6 +36,8 @@
 "Remove","Rimuovi"
 "Are you sure you want to remove this card?","Sei sicuro di voler rimuovere questa carta?"
 "You have no saved payment cards.","Non hai carte di pagamento salvate."
+"Your cards are securely stored, no sensitive information is saved on our servers. You can safely manage your saved cards here, removing those you no longer wish to use. Your saved cards can be used for faster checkout on future purchases.","Le tue carte sono memorizzate in modo sicuro, nessuna informazione sensibile viene salvata sui nostri server. Puoi gestire in modo sicuro le tue carte salvate qui, rimuovendo quelle che non desideri più utilizzare. Le tue carte salvate possono essere utilizzate per un checkout più veloce nei futuri acquisti."
+"Exp.","Scade"
 "Back","Indietro"
 "Card removed successfully.","La carta è stata rimossa con successo."
 "Unable to remove card. Please try again.","Impossibile rimuovere la carta. Riprova."
