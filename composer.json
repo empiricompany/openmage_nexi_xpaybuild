@@ -1,6 +1,6 @@
 {
     "name": "empiricompany/openmage-nexi-xpaybuild",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "OSL-3.0",
     "type": "magento-module",
     "description": "Nexi XPay Build embedded card payment for OpenMage (Magento 1.x LTS)",

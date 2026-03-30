@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Nexi_XPayBuild>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </Nexi_XPayBuild>
     </modules>
 
