@@ -22,10 +22,16 @@ class Nexi_XPayBuild_Model_Api_XpayClient
      * @var Nexi_XPayBuild_Helper_Data
      */
     protected $_helper;
+    /**
+     * @var Nexi_XPayBuild_Helper_Mac
+     */
+    protected $_macHelper;
+    
 
     public function __construct()
     {
         $this->_helper = Mage::helper('nexi_xpaybuild');
+        $this->_macHelper = Mage::helper('nexi_xpaybuild/mac');
     }
 
     /**
@@ -52,7 +58,7 @@ class Nexi_XPayBuild_Model_Api_XpayClient
             'importo'           => (int)$importo,
             'divisa'            => (int)$divisa,
             'timeStamp'         => $timeStamp,
-            'mac'               => Mage::helper('nexi_xpaybuild/mac')->calculateAccountingMac(
+            'mac'               => $this->_macHelper->calculateAccountingMac(
                 $alias,
                 $codiceTransazione,
                 $importo,
@@ -89,7 +95,7 @@ class Nexi_XPayBuild_Model_Api_XpayClient
             'importo'           => (int)$importo,
             'divisa'            => (int)$divisa,
             'timeStamp'         => $timeStamp,
-            'mac'               => Mage::helper('nexi_xpaybuild/mac')->calculateAccountingMac(
+            'mac'               => $this->_macHelper->calculateAccountingMac(
                 $alias,
                 $codiceTransazione,
                 $importo,
@@ -122,7 +128,7 @@ class Nexi_XPayBuild_Model_Api_XpayClient
             'apiKey'            => $alias,
             'codiceTransazione' => $codiceTransazione,
             'timeStamp'         => $timeStamp,
-            'mac'               => Mage::helper('nexi_xpaybuild/mac')->calculateOrderDetailMac(
+            'mac'               => $this->_macHelper->calculateOrderDetailMac(
                 $alias,
                 $codiceTransazione,
                 $timeStamp,
@@ -159,7 +165,7 @@ class Nexi_XPayBuild_Model_Api_XpayClient
         $payload = array(
             'apiKey'    => $alias,
             'timeStamp' => $timeStamp,
-            'mac'       => Mage::helper('nexi_xpaybuild/mac')->calculateProfileInfoMac(
+            'mac'       => $this->_macHelper->calculateProfileInfoMac(
                 $alias,
                 $timeStamp,
                 $macKey
@@ -212,7 +218,7 @@ class Nexi_XPayBuild_Model_Api_XpayClient
             'divisa'             => (int)$divisa,
             'xpayNonce'          => $xpayNonce,
             'timeStamp'          => $timeStamp,
-            'mac'                => Mage::helper('nexi_xpaybuild/mac')->calculateNonceMac(
+            'mac'                => $this->_macHelper->calculateNonceMac(
                 $alias,
                 $codiceTransazione,
                 $importo,
@@ -450,9 +456,8 @@ class Nexi_XPayBuild_Model_Api_XpayClient
         }
 
         $macKey = $helper->getXpayMacKey();
-        $macHelper = Mage::helper('nexi_xpaybuild/mac');
 
-        $isValidMac = $macHelper->verifyResponseMac(
+        $isValidMac = $this->_macHelper->verifyResponseMac(
             $decoded['mac'],
             $decoded['esito'],
             $decoded['idOperazione'],
