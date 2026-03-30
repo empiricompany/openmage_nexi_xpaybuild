@@ -292,7 +292,7 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
                  $payment, $response, array('codAut', 'codiceAutorizzazione', 'brand', 'pan', 'scadenza', 'scadenzaPan')
              );
 
-            if ($accountingType === 'I') {
+            if ($accountingType === 'C') {
                 $payment->setIsTransactionClosed(true);
                 $payment->setIsTransactionPending(false);
                 Mage::helper('nexi_xpaybuild')->createInvoiceForOrder($order, $codTrans);
@@ -460,7 +460,7 @@ class Nexi_XPayBuild_Model_Payment_NexiPayment extends Mage_Payment_Model_Method
                 );
             }
 
-            if ($accountingType === 'I') {
+            if ($accountingType === 'C') {
                 $payment->setIsTransactionClosed(true);
                 $payment->setIsTransactionPending(false);
                 Mage::helper('nexi_xpaybuild')->createInvoiceForOrder($order, $codTrans);
